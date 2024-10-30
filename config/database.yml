@@ -1,31 +1,37 @@
 # database.yml
 development:
-  encoding: unicode
-  pool: 5
   adapter: postgresql
-  host: localhost
-  username: postgres
-  password: 1234
-  database: memee-dev
+  encoding: unicode
+  database: app_development
+  username: nabeeha
+  password: <%= ENV['DB_PASSWORD'] %>
+  host: 35.244.25.128
+  port: 5432
+  pool: 5
+  timeout: 5000
 
 test:
-  encoding: unicode
-  pool: 5
   adapter: postgresql
-  host: localhost
-  username: postgres
-  password: 1234
-  database: memee-test
+  encoding: unicode
+  database: test_development
+  username: nabeeha
+  password: <%= ENV['DB_PASSWORD'] %>
+  host: 35.244.25.128
+  port: 5432
+  pool: 5
+  timeout: 5000
 
 production:
-  encoding: unicode
-  pool: 5
   adapter: postgresql
-  host: localhost
-  username: deploy
-  password: admin123
+  encoding: unicode
+  database: app_production
+  username: nabeeha
+  password: <%= ENV['DB_PASSWORD'] %>
+  host: 35.244.25.128
+  port: 5432
+  pool: 5
+  timeout: 5000
 
-  database: memee-production
 
 staging:
   encoding: unicode
