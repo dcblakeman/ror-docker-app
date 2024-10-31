@@ -17,7 +17,7 @@ jobs:
         image: postgres:12
         env:
           POSTGRES_USER: nabeeha
-          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           POSTGRES_DB: app_development
         options: >-
           --health-cmd="pg_isready -U nabeeha"
@@ -46,11 +46,11 @@ jobs:
         run: |
           echo "Checking database environment variables..."
           echo "POSTGRES_USER: $POSTGRES_USER"
-          echo "POSTGRES_PASSWORD: $POSTGRES_PASSWORD"
+          echo "DB_PASSWORD: $DB_PASSWORD"
           echo "POSTGRES_DB: $POSTGRES_DB"
         env:
           POSTGRES_USER: nabeeha
-          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           POSTGRES_DB: app_development
       
       - name: Test PostgreSQL Connection
