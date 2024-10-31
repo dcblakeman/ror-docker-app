@@ -120,4 +120,4 @@ jobs:
 
       - name: Deploy to GCP
         run: |
-          gcloud app deploy
+          gcloud app deploy ./ror-backend/app.yaml
