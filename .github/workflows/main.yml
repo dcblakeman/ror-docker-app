@@ -41,6 +41,18 @@ jobs:
           gem install bundler
           bundle install
 
+      # Debug Step: Check if DB_PASSWORD is set correctly
+      - name: Debug Database Environment Variables
+        run: |
+          echo "Checking database environment variables..."
+          echo "POSTGRES_USER: $POSTGRES_USER"
+          echo "POSTGRES_PASSWORD: $POSTGRES_PASSWORD"
+          echo "POSTGRES_DB: $POSTGRES_DB"
+        env:
+          POSTGRES_USER: nabeeha
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          POSTGRES_DB: app_development
+
       - name: Set up Database
         env:
           RAILS_ENV: test
@@ -63,6 +75,12 @@ jobs:
         uses: google-github-actions/auth@v0
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      # Debug Step: Check GCP Credentials
+      - name: Debug GCP Credentials
+        run: |
+          echo "Debugging GCP credentials..."
+          echo "GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}"
 
       - name: Set up Google Cloud CLI
         uses: google-github-actions/setup-gcloud@v0
