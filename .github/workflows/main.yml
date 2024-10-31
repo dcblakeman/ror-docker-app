@@ -76,7 +76,7 @@ jobs:
 
       - name: Create Database
         run: |
-          rails db:create
+          DATABASE_URL="postgresql://nabeeha:Nabeeha123@35.244.25.128:5432/app_development" rails db:create
         env:
           RAILS_ENV: development
           POSTGRES_USER: nabeeha
@@ -85,7 +85,7 @@ jobs:
 
       - name: Run Migrations
         run: |
-          rails db:migrate
+          DATABASE_URL="postgresql://nabeeha:Nabeeha123@35.244.25.128:5432/app_development" rails db:migrate
         env:
           RAILS_ENV: development
           POSTGRES_USER: nabeeha
