@@ -67,7 +67,7 @@ jobs:
         env:
           RAILS_ENV: development
           POSTGRES_USER: nabeeha
-          POSTGRES_PASSWORD: ${{ secrets.PG_DB_PASSWORD }}
+          POSTGRES_PASSWORD: Nabeeha123
           POSTGRES_DB: app_development
 
 
