@@ -68,9 +68,8 @@ jobs:
 
       - name: Test PostgreSQL Connection with Psql
         run: |
-           PGPASSWORD="${{ secrets.PG_DB_PASSWORD }}" psql -h 35.244.25.128 -U nabeeha -d app_development -c '\q'
-        env:
-           PG_DB_PASSWORD: ${{ secrets.PG_DB_PASSWORD }}
+          PGPASSWORD="Nabeeha123" psql -h 35.244.25.128 -U nabeeha -d app_development -c '\q'
+
       - name: Check Network Connectivity
         run: |
           nc -zv 35.244.25.128 5432
