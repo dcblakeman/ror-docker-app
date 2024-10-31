@@ -26,6 +26,11 @@ jobs:
           --health-retries=5
         ports:
           - 5432:5432
+  services:
+     redis:
+       image: redis
+       ports:
+         - 6379:6379
 
     steps:
       - name: Checkout code
@@ -61,14 +66,31 @@ jobs:
         run: |
            echo "DB_PASSWORD is set to: ${{ secrets.PG_DB_PASSWORD }}"
 
-      - name: Set up Database
+      - name: Test PostgreSQL Connection
         run: |
-          rails db:create db:migrate
+           PGPASSWORD="${{ secrets.PG_DB_PASSWORD }}" psql -h 35.244.25.128 -U nabeeha -d app_development -c '\q'
+
+      - name: Check Network Connectivity
+        run: |
+          nc -zv 35.244.25.128 5432
+
+      - name: Create Database
+        run: |
+          rails db:create
         env:
           RAILS_ENV: development
           POSTGRES_USER: nabeeha
-          POSTGRES_PASSWORD: Nabeeha123
+          POSTGRES_PASSWORD: ${{ secrets.PG_DB_PASSWORD }}
           POSTGRES_DB: app_development
+
+      - name: Run Migrations
+        run: |
+         rails db:migrate
+        env:
+         RAILS_ENV: development
+         POSTGRES_USER: nabeeha
+         POSTGRES_PASSWORD: ${{ secrets.PG_DB_PASSWORD }}
+         POSTGRES_DB: app_development
 
 
   deploy:
