@@ -3,4 +3,5 @@ env: flex
 service: default
 entrypoint: bundle exec rails server -b 0.0.0.0 -p $PORT
 runtime_config:
-  operating_system: "ubuntu22"
+  operating_system: "ubuntu22.04"
+#comment to check github Actions access the latest version.
