@@ -55,7 +55,7 @@ jobs:
 
       - name: Set up Database
         env:
-          RAILS_ENV: test
+          RAILS_ENV: development
         run: |
           rails db:create db:migrate
 
