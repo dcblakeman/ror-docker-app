@@ -57,8 +57,9 @@ jobs:
         run: |
           pg_isready -h 35.244.25.128 -U nabeeha -p 5432
       
-      - name: Debug Environment Variables
-        run: printenv | grep DB_PASSWORD
+      - name: Debug DB_PASSWORD Directly
+        run: |
+           echo "DB_PASSWORD is set to: ${{ secrets.DB_PASSWORD }}"
 
          
       - name: Set up Database
