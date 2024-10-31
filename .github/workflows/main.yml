@@ -62,13 +62,13 @@ jobs:
            echo "DB_PASSWORD is set to: ${{ secrets.PG_DB_PASSWORD }}"
 
       - name: Set up Database
+        run: |
+          rails db:create db:migrate
         env:
           RAILS_ENV: development
           POSTGRES_USER: nabeeha
           POSTGRES_PASSWORD: ${{ secrets.PG_DB_PASSWORD }}
           POSTGRES_DB: app_development
-        run: |
-          rails db:create db:migrate
 
 
   deploy:
