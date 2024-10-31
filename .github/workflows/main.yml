@@ -17,7 +17,7 @@ jobs:
         image: postgres:16
         env:
           POSTGRES_USER: nabeeha
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
           POSTGRES_DB: app_development
         options: >-
           --health-cmd="pg_isready -U nabeeha"
@@ -46,25 +46,27 @@ jobs:
         run: |
           echo "Checking database environment variables..."
           echo "POSTGRES_USER: $POSTGRES_USER"
-          echo "DB_PASSWORD: $DB_PASSWORD"
+          echo "POSTGRES_PASSWORD: $POSTGRES_PASSWORD"
           echo "POSTGRES_DB: $POSTGRES_DB"
         env:
           POSTGRES_USER: nabeeha
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
           POSTGRES_DB: app_development
       
       - name: Test PostgreSQL Connection
         run: |
           pg_isready -h 35.244.25.128 -U nabeeha -p 5432
-      
+
       - name: Debug DB_PASSWORD Directly
         run: |
            echo "DB_PASSWORD is set to: ${{ secrets.DB_PASSWORD }}"
 
-         
       - name: Set up Database
         env:
           RAILS_ENV: development
+          POSTGRES_USER: nabeeha
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          POSTGRES_DB: app_development
         run: |
           rails db:create db:migrate
 
