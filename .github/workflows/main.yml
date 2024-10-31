@@ -52,7 +52,11 @@ jobs:
           POSTGRES_USER: nabeeha
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
           POSTGRES_DB: app_development
-
+      
+      - name: Test PostgreSQL Connection
+        run: |
+          pg_isready -h 35.244.25.128 -U nabeeha -p 5432
+         
       - name: Set up Database
         env:
           RAILS_ENV: development
