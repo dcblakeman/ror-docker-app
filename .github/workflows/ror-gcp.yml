@@ -25,6 +25,10 @@ jobs:
           mkdir -p app/config
           mv gcp_credentials.json app/config/gcp_credentials.json
 
+      - name: Authenticate to Google Cloud
+        run: |
+          gcloud auth activate-service-account --key-file=app/config/gcp_credentials.json
+          gcloud config set project ror-deployment
           
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
