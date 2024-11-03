@@ -17,22 +17,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v2
-        with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
-
-      - name: Set Google Cloud Account
-        run: |
-          gcloud config set account github-gcp-credentials@ror-deployment.iam.gserviceaccount.com
-
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
-
-     # - name: Set up Google Cloud SDK
-     #   uses: google-github-actions/setup-gcloud@v2
-      #  with:
-       #   project_id: ror-deployment
+        with:
+          project_id: ror-deployment
+          workload_identity_provider: "projects/260257811964/locations/global/workloadIdentityPools/github-pool/providers/github-actions"
+          service_account: "github-gcp-credentials@ror-deployment.iam.gserviceaccount.com"
 
       - name: Configure Docker with Google Cloud auth
         run: |
