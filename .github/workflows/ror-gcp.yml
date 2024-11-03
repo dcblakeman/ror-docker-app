@@ -12,28 +12,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Decode GCP credentials and save as JSON
-        env:
-          GCP_CREDENTIALS_BASE64: ${{ secrets.GCP_CREDENTIALS_BASE64 }}
-        run: |
-          mkdir -p app/config
-          echo "$GCP_CREDENTIALS_BASE64" | base64 -d > app/config/gcp_credentials.json
-
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
         with:
-          credentials_json: app/config/gcp_credentials.json
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
           project_id: ror-deployment
           export_default_credentials: true
-
-      - name: View GCP Credentials
-        run: |
-          cat app/config/gcp_credentials.json
-
 
       - name: Configure Docker with Google Cloud auth
         run: |
