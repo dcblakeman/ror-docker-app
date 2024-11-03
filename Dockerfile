@@ -9,9 +9,11 @@ RUN apk update && \
 RUN wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O /cloud_sql_proxy && \
     chmod +x /cloud_sql_proxy
 
+
 # Set environment variables for Rails
 ENV RAILS_ENV=production
 ENV RACK_ENV=production
+ENV INSTANCE_CONNECTION_NAME=ror-deployment:asia-south1:ror-database-gcp
 
 # Set the working directory in the container
 WORKDIR /app
