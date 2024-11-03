@@ -24,6 +24,11 @@ jobs:
           workload_identity_provider: "projects/260257811964/locations/global/workloadIdentityPools/github-pool/providers/github-actions"
           service_account: "github-gcp-credentials@ror-deployment.iam.gserviceaccount.com"
 
+      - name: Verify Active Account
+        run: |
+          gcloud auth list
+          gcloud config list account
+      
       - name: Configure Docker with Google Cloud auth
         run: |
           gcloud auth configure-docker
