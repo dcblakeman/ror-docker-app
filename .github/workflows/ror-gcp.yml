@@ -19,9 +19,9 @@ jobs:
 
       - name: Set up Google Cloud credentials
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: app/config/gcp_credentials.json
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
         run: |
-          cat app/config/gcp_credentials.json
+          cat ${{ secrets.GCP_CREDENTIALS }}
           
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
