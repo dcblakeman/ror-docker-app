@@ -9,6 +9,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Clear Google Cloud Auth Cache
+        run: |
+          gcloud auth revoke || true
+          rm -rf ~/.config/gcloud
+          
       - name: Checkout repository
         uses: actions/checkout@v2
 
