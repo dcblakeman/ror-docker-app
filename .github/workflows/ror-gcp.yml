@@ -41,6 +41,6 @@ jobs:
 
       - name: Push Docker image to Artifact Registry
         run: |
-          docker tag ror-gcp:latest asia-south1-docker.pkg.dev/ror_deployment/ror-gcp-docker/ror-gcp:latest
-          docker push asia-south1-docker.pkg.dev/ror_deployment/ror-gcp-docker/ror-gcp:latest
+          docker tag ror-gcp:latest asia-south1-docker.pkg.dev/ror_deployment/ror-gcp-docker/ror-gcp-ar:latest
+          docker push asia-south1-docker.pkg.dev/ror_deployment/ror-gcp-docker/ror-gcp-ar:latest
 
