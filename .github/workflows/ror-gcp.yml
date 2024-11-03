@@ -46,7 +46,7 @@ jobs:
 
       - name: Deploy to Cloud Run
         run: |
-          gcloud run deploy SERVICE_NAME \
+          gcloud run deploy rorapp \
             --image docker.io/nabeehadev/rorapp:latest \
             --platform managed \
             --region asia-south1 \
