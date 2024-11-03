@@ -24,7 +24,11 @@ jobs:
           echo "${{ secrets.GCP_CREDENTIALS }}" > gcp_credentials.json
           mkdir -p app/config
           mv gcp_credentials.json app/config/gcp_credentials.json
-        
+      
+      - name: View GCP Credentials
+        run: |
+          cat app/config/gcp_credentials.json
+          
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
