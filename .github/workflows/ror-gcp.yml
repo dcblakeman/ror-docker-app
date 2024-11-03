@@ -1,5 +1,4 @@
-name: Build and Deploy RoR App to Google Artifact Registry
-
+name: Build and Deploy to Cloud Run
 on:
   push:
     branches:
@@ -8,21 +7,21 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    env:
-      IMAGE_NAME: ror-gcp  
-      PROJECT_ID: ror_deployment
-      REGION: asia-south1
-      REPOSITORY_NAME: ror-gcp-docker
-      SERVICE_NAME: GitHub-GCP-Credentials
-
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v0
+        uses: google-github-actions/auth@v1
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Google Cloud credentials
+        env:
+         GCP_CREDENTIALS_CONTENT: ${{ secrets.GCP_CREDENTIALS_CONTENT }}
+        run: |
+         echo "${GCP_CREDENTIALS_CONTENT}" > app/config/gcp_credentials.json
         
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
@@ -31,16 +30,23 @@ jobs:
           project_id: ror-deployment
           export_default_credentials: true
 
+      - name: Log in to Docker Hub
+        run: |  
+          echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u nabeehadev --password-stdin
+
       - name: Build Docker image
         run: |
-          docker build -t $IMAGE_NAME:latest .
+          docker build -t nabeehadev/rorapp:latest .
 
-      - name: Configure Docker for Artifact Registry
+      - name: Push Docker image to Docker Hub
         run: |
-          gcloud auth configure-docker $REGION-docker.pkg.dev --quiet
+          docker push nabeehadev/ror-app:latest
 
-      - name: Push Docker image to Artifact Registry
+      - name: Deploy to Cloud Run
         run: |
-          docker tag ror-gcp asia-south1-docker.pkg.dev/ror_deployment/images/ror:latest
-          docker push asia-south1-docker.pkg.dev/ror_deployment/images/ror:latest
-
+          gcloud run deploy SERVICE_NAME \
+            --image docker.io/nabeehadev/rorapp:latest \
+            --platform managed \
+            --region asia-south1 \
+            --allow-unauthenticated \
+            --update-env-vars BUCKET_NAME=ror-deployment-gcp,DB_CONNECTION_NAME=ror-deployment:asia-south1:ror-database-gcp
