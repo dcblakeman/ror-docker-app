@@ -19,13 +19,7 @@ jobs:
 
       - name: Set up Google Cloud credentials
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
-        run: |
-          echo "${{ secrets.GCP_CREDENTIALS }}" > gcp_credentials.json
-          mkdir -p app/config
-          mv gcp_credentials.json app/config/gcp_credentials.json
-      
-      - name: View GCP Credentials
+          GOOGLE_APPLICATION_CREDENTIALS: app/config/gcp_credentials.json
         run: |
           cat app/config/gcp_credentials.json
           
@@ -35,6 +29,7 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           project_id: ror-deployment
           export_default_credentials: true
+          
 
       - name: Configure Docker with Google Cloud auth
         run: |
