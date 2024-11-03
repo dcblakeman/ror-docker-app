@@ -16,6 +16,7 @@ jobs:
         env:
           GCP_CREDENTIALS_BASE64: ${{ secrets.GCP_CREDENTIALS_BASE64 }}
         run: |
+          mkdir -p app/config
           echo "$GCP_CREDENTIALS_BASE64" | base64 -d > app/config/gcp_credentials.json
 
       - name: Authenticate to Google Cloud
