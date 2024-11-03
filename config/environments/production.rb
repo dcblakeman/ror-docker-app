@@ -112,4 +112,6 @@ Rails.application.configure do
     "video/mp4"
   ]
   config.assets.compile = true
+  config.logger = ActiveSupport::Logger.new(STDOUT)
+  config.log_level = :info 
 end
