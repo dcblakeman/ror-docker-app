@@ -9,20 +9,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clear Google Cloud Auth Cache
-        run: |
-          gcloud auth revoke || true
-          rm -rf ~/.config/gcloud
-          
+    
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
         with:
           project_id: ror-deployment
           workload_identity_provider: "projects/260257811964/locations/global/workloadIdentityPools/github-pool/providers/github-actions"
           service_account: "github-gcp-credentials@ror-deployment.iam.gserviceaccount.com"
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
 
       - name: Verify Active Account
         run: |
