@@ -14,6 +14,7 @@ RUN wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O /cloud_sq
 ENV RAILS_ENV=production
 ENV RACK_ENV=production
 ENV INSTANCE_CONNECTION_NAME=ror-deployment:asia-south1:ror-database-gcp
+ENV GOOGLE_APPLICATION_CREDENTIALS=/app/gha-creds-6bc86fddab5f1d1e.json
 
 # Set the working directory in the container
 WORKDIR /app
