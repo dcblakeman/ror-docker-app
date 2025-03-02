@@ -43,9 +43,7 @@ jobs:
 
       - name: Build Docker image with Secret
         run: |
-          docker build \
-            --build-arg GCP_ENVIRONMENT=${{ secrets.GCP_CREDENTIALS }} \
-            -t zerogravityii/rorapp:latest .
+          docker build -t zerogravityii/rorapp:latest .
 
       - name: Push Docker image to Docker Hub
         run: |
