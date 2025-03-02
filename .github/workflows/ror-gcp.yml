@@ -16,6 +16,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Debug GCP Credentials
+        run: |
+          echo '${{ secrets.GCP_CREDENTIALS }}' | jq . > gcp-debug.json
+          cat gcp-debug.json
+
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
