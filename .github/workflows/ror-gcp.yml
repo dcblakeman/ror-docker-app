@@ -47,10 +47,13 @@ jobs:
         run: |
           echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u zerogravityii --password-stdin
 
+      - name: Create GCP credentials file
+        run: echo '${{ secrets.GCP_CREDENTIALS }}' > gcp-key.json
+
       - name: Build Docker image with Secret
         run: |
           docker build \
-            --build-arg GCP_SERVICE_ACCOUNT_KEY="${{ secrets.GCP_CREDENTIALS }}"
+            --build-arg GCP_SERVICE_ACCOUNT_KEY="$(cat gcp-key.json | jq -c .)" \
             -t zerogravityii/rorapp:latest .
 
       - name: Push Docker image to Docker Hub
