@@ -1,6 +1,9 @@
 # Use a lightweight Ruby image
 FROM ruby:3.0.0-alpine
 
+#Setting argument for gcp credentials
+ARG GCP_SERVICE_ACCOUNT_KEY
+
 # Install essential packages and dependencies
 RUN apk update && \
     apk add --no-cache build-base postgresql-dev nodejs yarn tzdata git nano redis curl supervisor
@@ -14,7 +17,7 @@ RUN wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O /cloud_sq
 ENV RAILS_ENV=production
 ENV RACK_ENV=production
 ENV INSTANCE_CONNECTION_NAME=ror-app-instance:us-east5-c:ror-database-gcp
-ENV GOOGLE_APPLICATION_CREDENTIALS='${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}'
+ENV GOOGLE_APPLICATION_CREDENTIALS=${GCP_SERVICE_ACCOUNT_KEY}
 
 # Set the working directory in the container
 WORKDIR /app
