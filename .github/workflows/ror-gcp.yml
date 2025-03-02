@@ -1,4 +1,4 @@
-name: Build and Deploy to Cloud Run
+ename: Build and Deploy to Cloud Run
 on:
   push:
     branches:
@@ -53,7 +53,7 @@ jobs:
       - name: Build Docker image with Secret
         run: |
           docker build \
-            --build-arg GCP_SERVICE_ACCOUNT_KEY="$(cat gcp-key.json | jq -c .)" \
+            --build-arg GCP_ENVIRONMENT="$(cat gcp-key.json | jq -c .)" \
             -t zerogravityii/rorapp:latest .
 
       - name: Push Docker image to Docker Hub
