@@ -17,25 +17,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Decode and Authenticate and write to file
+        run: echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" | base64 --decode > /tmp/gcp-key.json
+
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}'
-
-      - name: Write Google Credentials to File
-        run: echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" > gcp-key.json
+          credentials_json: "$(cat /tmp/gcp-key.json)"
 
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: ror-deployment-451705
 
-      - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v2
-        with:
-          project_id: ror-deployment-451705
-          workload_identity_provider: "projects/758695532616/locations/global/workloadIdentityPools/github-pool1/providers/github-actions"
-          service_account: "ror-service-account@ror-deployment-451705.iam.gserviceaccount.com"
+      # - name: Authenticate to Google Cloud
+      #   uses: google-github-actions/auth@v2
+      #   with:
+      #     project_id: ror-deployment-451705
+      #     workload_identity_provider: "projects/758695532616/locations/global/workloadIdentityPools/github-pool1/providers/github-actions"
+      #     service_account: "ror-service-account@ror-deployment-451705.iam.gserviceaccount.com"
 
       - name: Verify Active Account
         run: |
@@ -53,7 +53,7 @@ jobs:
       - name: Build Docker image with Secret
         run: |
           docker build \
-            --build-arg GCP_SERVICE_ACCOUNT_KEY="gcp-key.json" \
+            --build-arg GCP_SERVICE_ACCOUNT_KEY=/tmp/gcp-key.json \
             -t zerogravityii/rorapp:latest .
 
       - name: Push Docker image to Docker Hub
