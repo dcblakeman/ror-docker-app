@@ -1,4 +1,4 @@
-name: Build and Deploy to Cloud Run
+oname: Build and Deploy to Cloud Run
 on:
   push:
     branches:
@@ -48,21 +48,21 @@ jobs:
 
       - name: Log in to Docker Hub
         run: |
-          echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u nabeehadev --password-stdin
+          echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u zerogravityii --password-stdin
 
       - name: Build Docker image
         run: |
-          docker build -t nabeehadev/rorapp:latest .
+          docker build -t zerogravityii/rorapp:latest .
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker push nabeehadev/rorapp:latest
+          docker push zerogravityii/rorapp:latest
 
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy rorapp \
-            --image docker.io/nabeehadev/rorapp:latest \
+            --image docker.io/zerogravityii/rorapp:latest \
             --platform managed \
-            --region asia-south1 \
+            --region us-east5-c \
             --allow-unauthenticated \
-            --update-env-vars BUCKET_NAME=ror-deployment-gcp,DB_CONNECTION_NAME=ror-deployment:asia-south1:ror-database-gcp
+            --update-env-vars BUCKET_NAME=dans-ror-deployment-bucket,DB_CONNECTION_NAME=ror-deployment-451705:us-east5:ror-database-gcp
