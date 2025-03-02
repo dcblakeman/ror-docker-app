@@ -22,6 +22,9 @@ jobs:
         with:
           credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}'
 
+      - name: Write Google Credentials to File
+        run: echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" > gcp-key.json
+
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
         with:
@@ -50,9 +53,11 @@ jobs:
         run: |
           echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u zerogravityii --password-stdin
 
-      - name: Build Docker image
+      - name: Build Docker image with Secret
         run: |
-          docker build -t zerogravityii/rorapp:latest .
+          docker build \
+            build-arg GCP_SERVICE_ACCOUNT_KEY="gcp-key.json" \
+            -t zerogravityii/rorapp:latest .
 
       - name: Push Docker image to Docker Hub
         run: |
