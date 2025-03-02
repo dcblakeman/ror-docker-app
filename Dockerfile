@@ -2,7 +2,7 @@
 FROM ruby:3.0.0-alpine
 
 #Setting argument for gcp credentials
-ARG GCP_ENVIRONMENT
+ARG GCP_CREDENTIALS
 
 # Install essential packages and dependencies
 RUN apk update && \
@@ -12,12 +12,14 @@ RUN apk update && \
 RUN wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O /cloud_sql_proxy && \
     chmod +x /cloud_sql_proxy
 
+# Write the GCP credentials to a file
+RUN echo "$GCP_CREDENTIALS" | jq -c . > /app/gcp-key.json
 
 # Set environment variables for Rails
 ENV RAILS_ENV=production
 ENV RACK_ENV=production
 ENV INSTANCE_CONNECTION_NAME=ror-app-instance:us-east5-c:ror-database-gcp
-ENV GOOGLE_APPLICATION_CREDENTIALS=${GCP_ENVIRONMENT}
+ENV GOOGLE_APPLICATION_CREDENTIALS="/app/gcp-key.json"
 
 # Set the working directory in the container
 WORKDIR /app
