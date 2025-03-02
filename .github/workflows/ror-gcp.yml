@@ -13,14 +13,13 @@ jobs:
       contents: read
 
     steps:
-    
       - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
@@ -50,7 +49,7 @@ jobs:
       - name: Build Docker image with Secret
         run: |
           docker build \
-            --build-arg GCP_ENVIRONMENT="${{ secrets.GCP_CREDENTIALS }}" \
+            --build-arg GCP_ENVIRONMENT=${{ secrets.GCP_CREDENTIALS }} \
             -t zerogravityii/rorapp:latest .
 
       - name: Push Docker image to Docker Hub
