@@ -18,8 +18,9 @@ jobs:
 
       - name: Debug GCP Credentials
         run: |
-          echo '${{ secrets.GCP_CREDENTIALS }}' | jq . > gcp-debug.json
+          echo "${{ secrets.GCP_CREDENTIALS }}" | jq . > gcp-debug.json || echo "Invalid JSON Format"
           cat gcp-debug.json
+
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
