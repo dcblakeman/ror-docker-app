@@ -30,7 +30,7 @@ jobs:
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          project_id: ror-deployment
+          project_id: ror-deployment-451705
           workload_identity_provider: "projects/758695532616/locations/global/workloadIdentityPools/github-pool1/providers/github-actions"
           service_account: "ror-service-account@ror-deployment-451705.iam.gserviceaccount.com"
 
