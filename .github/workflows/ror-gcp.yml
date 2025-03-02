@@ -63,6 +63,6 @@ jobs:
           gcloud run deploy rorapp \
             --image docker.io/zerogravityii/rorapp:latest \
             --platform managed \
-            --region us-east5-c \
+            --region us-east5 \
             --allow-unauthenticated \
             --update-env-vars BUCKET_NAME=dans-ror-deployment-bucket,DB_CONNECTION_NAME=ror-deployment-451705:us-east5:ror-database-gcp
