@@ -23,7 +23,6 @@ COPY Gemfile Gemfile.lock ./
 # Install bundler and gems
 RUN gem install bundler && bundle config set --local without 'development test' && bundle install
 
-
 # Copy the rest of the application code
 COPY . .
 
