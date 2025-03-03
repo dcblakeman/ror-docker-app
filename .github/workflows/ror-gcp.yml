@@ -25,9 +25,6 @@ jobs:
       - name: Debug Authentication
         run: gcloud auth list
 
-      - name: Check IAM Permissions
-        run: gcloud projects get-iam-policy ror-deployment-451705 --format=json
-
       - name: Verify Cloud Run Access
         run: gcloud run services list --project=ror-deployment-451705
 
